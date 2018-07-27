@@ -11,8 +11,15 @@
                         {{ $data->order_number }} <br />
                         Total <br />
                         {{ $data->total }} <br />
-                        {{ $data->product_name }} that cost {{ $data->price }} will be shipped to {{ $data->shipping_address }} after you pay <br />   
-                        <a href="{{ route('order.payment', $data->order_number) }}" type="button"  class="btn">Pay Here</a>
+                        {{ $data->product_name }} that cost {{ $data->price }} will be shipped to {{ $data->shipping_address }} after you pay <br />
+                        @foreach($status as $stat)
+                            @if($stat['orders']['status'] == "Unpaid" && $stat['orders']['status'] != "Cancelled")
+                                <a href="{{ route('order.payment', $data->order_number) }}" type="button"
+                                   class="btn">Pay Here</a>
+                            @else
+                                {{ $stat['orders']['status'] }}
+                            @endif
+                        @endforeach
                     </p>
                 </div>
             </div>

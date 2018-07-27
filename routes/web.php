@@ -42,3 +42,6 @@ Route::group(['prefix' => 'order'], function(){
     Route::get('/payment/{id}', 'OrderController@payment')->name('order.payment');
     Route::put('/payment/{id}', 'OrderController@update')->name('order.update');
 });
+
+Route::name('error')->get('error', 'ErrorController@error404');
+Route::name('no-access')->get('maintenance', 'ErrorController@noAccess');

@@ -25,7 +25,7 @@ class OrderController extends Controller
         $prepaids = Order::with('prepaid')->where('user_id',Auth::user()->id)->where('id', 'LIKE','%'.$orderNumber.'%')->get()->toArray();
         $products = Order::with('product')->where('user_id',Auth::user()->id)->where('id', 'LIKE','%'.$orderNumber.'%')->get()->toArray();
 
-        $collection = collect([$prepaids, $products])->collapse()->sortBy('created_date')->forPage($page,20);
+        $collection = collect([$prepaids, $products])->collapse()->sortBy('created_date')->all();
         return view('order.index', compact('collection'));
     }
 

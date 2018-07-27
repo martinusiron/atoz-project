@@ -77,7 +77,13 @@ class PrepaidController extends Controller
             return redirect()->route('home');
         }
         $data = Prepaid::findOrFail($id);
-        return view('prepaid.show',compact('data'));
+        $status = Prepaid::with('orders')->where('order_number',$data->order_number)->get()->toArray();
+        foreach ($status as $stat){
+            if($stat['orders']['user_id'] != Auth::user()->id){
+                return view('error.no-access');
+            }
+        }
+        return view('prepaid.show',compact('data','status'));
     }
 
     /**

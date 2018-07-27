@@ -77,7 +77,13 @@ class ProductController extends Controller
             return redirect()->route('home');
         }
         $data = Product::findOrFail($id);
-        return view('product.show',compact('data'));
+        $status = Product::with('orders')->where('order_number',$data->order_number)->get()->toArray();
+        foreach ($status as $stat){
+            if($stat['orders']['user_id'] != Auth::user()->id){
+                return view('error.no-access');
+            }
+        }
+        return view('product.show',compact('data','status'));
     }
 
     /**
