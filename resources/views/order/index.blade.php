@@ -14,6 +14,12 @@
                             <button type="submit" class="btn">Search</button>
                         </div>
                     </form>
+                    @if(Session::has('message'))
+                        <div class="alert alert-success">
+                            <button type="button" class="close"></button>
+                            {{ Session::get('message') }}
+                        </div>
+                    @endif
                     <div class="card-header">{{ __('List Order') }}</div>
                     <table class="table table-striped">
                         <tr>

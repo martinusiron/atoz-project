@@ -106,7 +106,9 @@ class OrderController extends Controller
                         $status = Order::SUCCESS;
                         $payDate = $now;
                     } else{
-                        $status = Order::FAILED;
+                        $state = array(Order::SUCCESS, Order::FAILED);
+                        $key = array_rand($state);
+                        $status = $state[$key];
                         $payDate = null;
                     }
                 } else{
@@ -114,9 +116,6 @@ class OrderController extends Controller
                     $payDate = null;
                 }
 
-//                $state = array('Success', 'Failed');
-//                $key = array_rand($state);
-//                dd($state[$key]);
                 $dataUpdate = [
                     'status' => $status,
                     'pay_date' => $payDate
